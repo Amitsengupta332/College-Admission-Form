@@ -1,8 +1,15 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import { useLoaderData } from 'react-router-dom';
+import useCollege from '../../hook/useCollege';
 
 const Admission = () => {
+
+    const [colleges, loading] = useCollege()
+    
+
+
 
     const { user } = useContext(AuthContext);
     const defaultCandidateName = user?.displayName || '';
@@ -18,13 +25,13 @@ const Admission = () => {
         const email = user?.email;
         const Phone = form.phone.value;
         const address = form.address.value;
-        const image = form.imageUrl.value;
+        const img = form.imageUrl.value;
         const date = form.date.value;
 
         const admissionData = {
             selectCollege,
             subject,
-            name, email, Phone, address, image, date
+            name, email, Phone, address, img, date,
         }
         console.log(admissionData);
 
