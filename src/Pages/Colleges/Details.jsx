@@ -8,17 +8,14 @@ const Details = ({ selectedCollege }) => {
             <div className="px-5 py-5 mx-auto my-auto">
                 <div className=" ">
                     <div className="bg-base-100 shadow-xl p-5 rounded-md">
-                        <figure>
-                            <img
-                                className="w-full h-64 object-cover rounded-md"
-                                src={selectedCollege?.image}
-                                alt="Album"
-                            />
+
+                        <figure className="w-full object-cover">
+                            <img src={selectedCollege?.image} alt="Shoes" className="rounded-xl w-[100%]" />
                         </figure>
 
                         <div className="mt-4">
                             <h2 className="text-4xl font-bold">{selectedCollege?.name}</h2>
-                            <p className="text-md">Admission process:</p>
+                            <p className="text-3xl font-semibold">Admission process:</p>
                             <ul className="text-md list-disc ml-6">
                                 <li>{selectedCollege?.admissionProcess?.requirements}</li>
                                 <li>{selectedCollege?.admissionProcess?.procedures}</li>

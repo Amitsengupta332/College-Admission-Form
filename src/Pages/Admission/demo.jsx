@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
 
@@ -6,50 +6,30 @@ const Admission = () => {
 
     const { user } = useContext(AuthContext);
     const defaultCandidateName = user?.displayName || '';
-    const defaultEmail = user?.email || '';
+    // const defaultEmail = user?.email || '';
 
-    const handleSubmit = event => {
-        event.preventDefault();
 
-        const form = event.target;
-        const selectCollege = form.selectCollege.value;
-        const subject = form.subject.value;
-        const name = form.name.value;
-        const email = user?.email;
-        const Phone = form.phone.value;
-        const address = form.address.value;
-        const image = form.imageUrl.value;
-        const date = form.date.value;
+    const [admissionData, setAdmissionData] = useState({
+        imageUrl: '',
+        user: defaultCandidateName,
+        email: user?.email,
+        collegeName: '',
+        candidatePhone: '',
+        address: '',
+        dateOfBirth: '',
+        subject: '', // New field for the subject category
+    });
 
-        const admissionData = {
-            selectCollege,
-            subject,
-            name, email, Phone, address, image, date
-        }
-        console.log(admissionData);
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setAdmissionData((prevState) => ({
+            ...prevState,
+            [id]: value,
+        }));
+    };
 
-        // fetch('https://toy-marketplace-server-hazel.vercel.app/addToys', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(newToy)
-        // }
-
-        // )
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log(data)
-        //         if (data.insertedId) {
-        //             Swal.fire({
-        //                 title: 'Success!',
-        //                 text: 'Toy Added Successfully',
-        //                 icon: 'success',
-        //                 confirmButtonText: 'Added Successful'
-        //             })
-        //         }
-        //     })
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
         fetch(`http://localhost:5000/admission`, {
             method: 'POST',
@@ -58,37 +38,53 @@ const Admission = () => {
             },
             body: JSON.stringify(admissionData),
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
                 if (data.insertedId) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Admission Apply Successfully',
-                        icon: 'success',
-                        confirmButtonText: 'Added Successful'
-                    })
+                    Swal('Good job!', 'Admission Form Fill Up Successfully', 'success');
                 }
             })
-        // .then((res) => {
-        //     if (!res.ok) {
-        //         throw new Error('Network response was not ok');
-        //     }
-        //     return res.json();
-        // })
-        // .then((data) => {
-        //     console.log(data);
-        //     if (data.insertedId) {
-        //         Swal('Good job!', 'Admission Form Fill Up Successfully', 'success');
-        //     }
-        // })
-        // .catch((error) => {
-        //     console.error('Error submitting form:', error);
-        //     Swal('Oops!', 'An error occurred while submitting the form', 'error');
-        // });
+            .catch((error) => {
+                console.error('Error submitting form:', error);
+                Swal('Oops!', 'An error occurred while submitting the form', 'error');
+            });
 
+        setAdmissionData({
+            imageUrl: '',
+            candidateName: defaultCandidateName,
+            email: defaultEmail,
+            collegeName: '',
+            candidatePhone: '',
+            address: '',
+            dateOfBirth: '',
+            subject: '', // Reset subject field
+        });
+    };
 
-    }
+    const handlecollegeNameChange = (e) => {
+        const { value } = e.target;
+
+        e
+        setAdmissionData((prevState) => ({
+            ...prevState,
+            collegeName: value,
+
+        }));
+    };
+
+    const handleSubjectChange = (e) => {
+        const { value } = e.target;
+        setAdmissionData((prevState) => ({
+            ...prevState,
+            subject: value,
+        }));
+    };
 
     return (
         <div>
@@ -102,7 +98,9 @@ const Admission = () => {
                         <label className="input-group">
                             <select
                                 id="collegeName"
-                                name="selectCollege"
+                                value={admissionData.collegeName}
+                                onChange={handlecollegeNameChange}
+
                                 className="input input-bordered w-full"
                                 required
                             >
@@ -128,7 +126,9 @@ const Admission = () => {
                         <label className="input-group">
                             <select
                                 id="subject"
-                                name='subject'
+
+                                value={admissionData.subject}
+                                onChange={handleSubjectChange}
                                 className="input input-bordered w-full"
                                 required
                             >
@@ -151,7 +151,9 @@ const Admission = () => {
                                 type="text"
                                 id="candidateName"
                                 name='name'
-                                defaultValue={user?.displayName}
+                                value={admissionData.candidateName}
+                                onChange={handleChange}
+                                defaultValue={user}
                                 readOnly
                                 className="input input-bordered w-full"
                                 required

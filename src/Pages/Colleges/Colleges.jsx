@@ -17,7 +17,7 @@ const Colleges = () => {
 
 
     return (
-        <div>
+        <div className='mx-auto container'>
             <h2 className='text-5xl text-center'>College List are: {allCollege.length}</h2>
             <div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 mt-5'>
                 {
