@@ -11,7 +11,7 @@ const College = () => {
 
     // useEffect(() => {
 
-    //     fetch(`http://localhost:5000/admission/email/${user?.email}`)
+    //     fetch(`https://college-applicatio-form-server.vercel.app/admission/email/${user?.email}`)
     //         .then(res => res.json())
     //         .then(data => {
     //             console.log(data);
@@ -34,7 +34,7 @@ const College = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/admission/search`);
+            const response = await axios.get(`https://college-applicatio-form-server.vercel.app/admission/search`);
             setSelectedColleges(response.data || []);
             console.log(response.data);
         } catch (error) {

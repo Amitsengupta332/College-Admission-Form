@@ -7,7 +7,7 @@ const HomeCard = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/Colleges')
+        fetch('https://college-applicatio-form-server.vercel.app/Colleges')
             .then(res => res.json())
             .then(result => {
                 setCollegeCard(result)

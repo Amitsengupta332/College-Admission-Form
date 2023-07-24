@@ -4,7 +4,7 @@ const useCollege = () =>{
     const { data: colleges = [], isLoading: loading, refetch } = useQuery({
         queryKey: ['colleges'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/Colleges');
+            const res = await fetch('https://college-applicatio-form-server.vercel.app/Colleges');
             const data = await res.json();
 
             // console.log(data)

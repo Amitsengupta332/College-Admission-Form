@@ -8,6 +8,7 @@ import Login from "../components/LoginLayout/Login/Login";
 import Signup from "../components/LoginLayout/Signup/Signup";
 import CollegeDetails from "../Pages/Colleges/CollegeDetails";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 
 export const router = createBrowserRouter([
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/admission',
-        element: <Admission></Admission>
+        element: <PrivateRoutes><Admission></Admission></PrivateRoutes>
       },
       {
         path: '/college',
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/CollegeDetails/:id',
-        element: <CollegeDetails></CollegeDetails>
+        element: <PrivateRoutes><CollegeDetails></CollegeDetails></PrivateRoutes>
       },
       {
         path: '/login',

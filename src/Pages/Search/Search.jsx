@@ -14,7 +14,7 @@ const Search = () => {
     const handleSearch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:5000/searchColleges?name=${searchTerm}`);
+            const response = await axios.get(`https://college-applicatio-form-server.vercel.app/searchColleges?name=${searchTerm}`);
             setSearchResults(response.data);
             setLoading(false);
         } catch (error) {
